@@ -3,7 +3,7 @@ if [[ $EUID -ne 0 ]]; then
     echo "This script requires root access to function."
     exit 1
 fi
-(which ipset >/dev/null && echo "IPset is installed.") || (echo "Install IPset, it should be in your distrobution's repositories." && exit 1)
+(which ipset >/dev/null && echo "IPset is installed.") || echo "Install IPset, it should be in your distrobution's repositories."; exit 1
 if [ ! -d /tmp/activeTables ]; then
     mkdir /tmp/activeTables
 fi
