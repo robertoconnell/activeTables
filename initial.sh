@@ -18,14 +18,11 @@ if [ $? -eq 0 ]; then
 else
     echo "[x]Install GPG, it should be in your distrobution's repositories."; exit 1
 fi
-
-if [ ! -d /tmp/activeTables ]; then
-    mkdir /tmp/activeTables
-fi
-if ipset list | grep activeTable >/dev/null; then 
+ipset list activeTable >/dev/null
+if [ $? -eq 0]; then 
     echo "[*]activeTable already exists." 
 else 
 	echo "[*]Creating ipset table 'activeTable'" 
-	ipset create activeTable nethash
+	ipset create activeTable hash:net
 fi
 echo "iptables -I OUTPUT -m set --match-set activeTable dst -j REJECT "
