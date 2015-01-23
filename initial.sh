@@ -25,4 +25,8 @@ else
 	echo "[*]Creating ipset table 'activeTable'" 
 	ipset create activeTable hash:net
 fi
-echo "iptables -I OUTPUT -m set --match-set activeTable dst -j REJECT "
+echo 'About to run "iptables -I INPUT -m set --match-set activeTable dst -j REJECT"'
+echo "Which will add the ipset to your IPTables."
+echo "Unless you have some special and fragile iptables setup, this should be fine."
+read -p "Continue? [y/N]" prompt
+if [[ 
