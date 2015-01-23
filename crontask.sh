@@ -1,4 +1,9 @@
 #!/bin/bash
+
+#Create tmp folder
+if [ ! -d /tmp/activeTables ]; then
+    mkdir /tmp/activeTables
+fi
 cd /tmp/activeTables
 wget -Nq https://www.dshield.org/block.txt -O /tmp/activeTables/block.txt
 wget -Nq https://www.dshield.org/block.txt.asc -O /tmp/activeTables/block.txt.asc
