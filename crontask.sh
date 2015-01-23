@@ -14,8 +14,7 @@ if [ $? -ne 0 ]; then
     exit 1;
 fi
 
-#ipset create activeTable_tmp hash:net
-#cat block.txt | grep -P '^[^#S]' | awk '{print $1 "/" $3}' | xargs -0 -I ip -n 1 -d "\n" ipset add activeTalbe_tmp ip
-#ipset swap activeTable activeTable_tmp
-#ipset destroy activeTable_tmp
-#
+ipset create activeTable_tmp hash:net
+cat block.txt | grep -P '^[^#S]' | awk '{print $1 "/" $3}' | xargs -0 -I ip -n 1 -d "\n" ipset add activeTalbe_tmp ip
+ipset swap activeTable activeTable_tmp
+ipset destroy activeTable_tmp
