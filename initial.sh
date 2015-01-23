@@ -1,23 +1,31 @@
 #!/bin/bash
+#Ensure running as root
 if [[ $EUID -ne 0 ]]; then
-    echo "This script requires root access to function."
+    echo "[x]This script requires root access to function."
     exit 1
 fi
+#Ensure ipset is installed
 which ipset >/dev/null
-
 if [ $? -eq 0 ]; then
-    echo "IPset is installed."
+    echo "[*]IPset is installed."
 else
-    echo "Install IPset, it should be in your distrobution's repositories."; exit 1
+    echo "[x]Install IPset, it should be in your distrobution's repositories."; exit 1
+fi
+#Ensure gpg is installed
+gpg --version > /dev/null
+if [ $? -eq 0 ]; then
+    echo "[*]GPG is installed"
+else
+    echo "[x]Install GPG, it should be in your distrobution's repositories."; exit 1
 fi
 
 if [ ! -d /tmp/activeTables ]; then
     mkdir /tmp/activeTables
 fi
 if ipset list | grep activeTable >/dev/null; then 
-    echo "activeTable already exists." 
+    echo "[*]activeTable already exists." 
 else 
-	echo "Creating ipset table 'activeTable'" 
+	echo "[*]Creating ipset table 'activeTable'" 
 	ipset create activeTable nethash
 fi
 echo "iptables -I OUTPUT -m set --match-set activeTable dst -j REJECT "
